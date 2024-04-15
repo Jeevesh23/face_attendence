@@ -40,7 +40,6 @@ class Face_recognization:
                 f.writelines(f"\n{i},{r},{n},{d},{dtString},{d1},Present")
 
 
-
     #<======Face Recognition=======>
     def face_recog(self):
         def draw_boundary(img,classifier,scaleFactor,minNeighbours,color,text,clf):
@@ -59,22 +58,21 @@ class Face_recognization:
 
                 my_cursor.execute("select student_name from student where student_id="+str(id))
                 n=my_cursor.fetchone()
-                n="+".join(i)
-                #i can put more details also that i want to display. change the variables accordingly
+                n="+".join(n)
 
                 #selecting student id for attendance update
                 my_cursor.execute("select student_id from student where student_id="+str(id))
                 i=my_cursor.fetchone()
-                i="+".join(n)
+                i="+".join(i)
 
                 my_cursor.execute("select roll_no from student where student_id="+str(id))
                 r=my_cursor.fetchone()
-                r="+".join(n)
+                r=str(r[0])  # Convert roll number to string before joining
+                r="+".join(r)
 
                 my_cursor.execute("select Dep from student where student_id="+str(id))
                 d=my_cursor.fetchone()
-                d="+".join(n)
-
+                d="+".join(d)
 
                 if confidence>75:
                     cv2.putText(img, f"ID:{i}", (x,y-75), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255,255,255), 3)
@@ -87,7 +85,7 @@ class Face_recognization:
                 coord=[x,y,w,h]
 
             return coord
-        
+
         def recognize(img,clf,faceCascade):
             coord=draw_boundary(img, faceCascade, 1.1, 10, (255,25,255), "Face", clf)
             return img
@@ -107,6 +105,8 @@ class Face_recognization:
                 break
         video_cap.release()
         cv2.destroyAllWindows()
+
+
 
                     
 if __name__ == "__main__":
