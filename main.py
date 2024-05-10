@@ -8,6 +8,7 @@ from face_recognizer import Face_recognization
 
 
 class Face_Recognition_System:
+    
     def __init__(self, root):
         self.root=root
         self.root.geometry("1530x790+0+0")
@@ -85,8 +86,8 @@ class Face_Recognition_System:
     #=======function buttons===========#
     def student_details(self):
         self.new_window=Toplevel(self.root)
-        # self.new_window.geometry("800x600")  # Set the geometry of the new window
-        # self.new_window.title("Student Details")  # Set the title of the new window
+        self.new_window.geometry("800x600")  # Set the geometry of the new window
+        self.new_window.title("Student Details")  # Set the title of the new window
         self.app=Student(self.new_window)
 
     def train_data(self):
@@ -107,3 +108,5 @@ if __name__ == "__main__":
     root=Tk()
     obj=Face_Recognition_System(root)
     root.mainloop()
+
+    

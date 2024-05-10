@@ -42,80 +42,80 @@ class Face_recognization:
 
     #<======Face Recognition=======>
     def face_recog(self):
-        def draw_boundary(img, classifier, scaleFactor, minNeighbours, color, text, clf):
-            gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            features = classifier.detectMultiScale(gray_image, scaleFactor, minNeighbours)
+        # def draw_boundary(img, classifier, scaleFactor, minNeighbours, color, text, clf):
+        #     gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        #     features = classifier.detectMultiScale(gray_image, scaleFactor, minNeighbours)
 
-            for (x, y, w, h) in features:
-                cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 3)
-                roi_gray = gray_image[y:y+h, x:x+w]
-                id_, predict = clf.predict(roi_gray)
-                confidence = int((100 * (1 - predict / 300)))
+        #     for (x, y, w, h) in features:
+        #         cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 3)
+        #         roi_gray = gray_image[y:y+h, x:x+w]
+        #         id_, predict = clf.predict(roi_gray)
+        #         confidence = int((100 * (1 - predict / 300)))
 
-                if confidence > 75:
-                    conn = mysql.connector.connect(host="localhost", username="root", password="J2304@PJN#", database="face_recognizer")
-                    my_cursor = conn.cursor()
+        #         if confidence > 75:
+        #             conn = mysql.connector.connect(host="localhost", username="root", password="J2304@PJN#", database="face_recognizer")
+        #             my_cursor = conn.cursor()
 
-                    my_cursor.execute("SELECT student_name FROM student WHERE student_id=" + str(id_))
-                    n = my_cursor.fetchone()
-                    n = "+".join(n)
+        #             my_cursor.execute("SELECT student_name FROM student WHERE student_id=" + str(id_))
+        #             n = my_cursor.fetchone()
+        #             n = "+".join(n)
 
-                    # Selecting student ID for attendance update
-                    i = str(id_)  # Convert ID to string
-                    r = i  # Using ID as roll number if roll number is not available
-                    d = "Dep"  # Department placeholder
-                    cv2.putText(img, f"ID: {i}", (x, y-75), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 255, 255), 3)
-                    cv2.putText(img, f"Name: {n}", (x, y-55), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 255, 255), 3)
-                    self.mark_attendance(i, r, n, d)
-                else:
-                    cv2.rectangle(img, (x, y), (x+w, y+h), (0, 0, 255), 3)
-                    cv2.putText(img, "Unknown Face", (x, y-55), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 255, 255), 3)
-
-            return img
-
-        # def draw_boundary(img,classifier,scaleFactor,minNeighbours,color,text,clf):
-        #     gray_image=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-        #     features=classifier.detectMultiScale(gray_image,scaleFactor,minNeighbours)
-
-        #     coord=[]
-
-        #     for(x,y,w,h) in features:
-        #         cv2.rectangle(img,(x,y),(x+w,y+h), (0,255,0), 3)
-        #         id,predict=clf.predict(gray_image[y:y+h,x:x+w])
-        #         confidence=int((100*(1-predict/300)))
-
-        #         conn=mysql.connector.connect(host="localhost", username="root",password="J2304@PJN#",database="face_recognizer")
-        #         my_cursor=conn.cursor()
-
-        #         my_cursor.execute("select student_name from student where student_id="+str(id))
-        #         n=my_cursor.fetchone()
-        #         n="+".join(n)
-
-        #         #selecting student id for attendance update
-        #         my_cursor.execute("select student_id from student where student_id="+str(id))
-        #         i=my_cursor.fetchone()
-        #         i="+".join(i)
-
-        #         my_cursor.execute("select roll_no from student where student_id="+str(id))
-        #         r=my_cursor.fetchone()
-        #         r=str(r[0])  # Convert roll number to string before joining
-        #         r="+".join(r)
-
-        #         my_cursor.execute("select Dep from student where student_id="+str(id))
-        #         d=my_cursor.fetchone()
-        #         d="+".join(d)
-
-        #         if confidence>75:
-        #             cv2.putText(img, f"ID:{i}", (x,y-75), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255,255,255), 3)
-        #             cv2.putText(img, f"Name:{n}", (x,y-55), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255,255,255), 3)
-        #             self.mark_attendance(i,r,n,d)
+        #             # Selecting student ID for attendance update
+        #             i = str(id_)  # Convert ID to string
+        #             r = i  # Using ID as roll number if roll number is not available
+        #             d = "Dep"  # Department placeholder
+        #             cv2.putText(img, f"ID: {i}", (x, y-75), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 255, 255), 3)
+        #             cv2.putText(img, f"Name: {n}", (x, y-55), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 255, 255), 3)
+        #             self.mark_attendance(i, r, n, d)
         #         else:
-        #             cv2.rectangle(img,(x,y),(x+w,y+h), (0,0,255), 3)
-        #             cv2.putText(img, "Unknown Face", (x,y-55), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255,255,255), 3)
+        #             cv2.rectangle(img, (x, y), (x+w, y+h), (0, 0, 255), 3)
+        #             cv2.putText(img, "Unknown Face", (x, y-55), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 255, 255), 3)
 
-        #         coord=[x,y,w,h]
+        #     return img
 
-        #     return coord
+        def draw_boundary(img,classifier,scaleFactor,minNeighbours,color,text,clf):
+            gray_image=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+            features=classifier.detectMultiScale(gray_image,scaleFactor,minNeighbours)
+
+            coord=[]
+
+            for(x,y,w,h) in features:
+                cv2.rectangle(img,(x,y),(x+w,y+h), (0,255,0), 3)
+                id,predict=clf.predict(gray_image[y:y+h,x:x+w])
+                confidence=int((100*(1-predict/300)))
+
+                conn=mysql.connector.connect(host="localhost", username="root",password="J2304@PJN#",database="face_recognizer")
+                my_cursor=conn.cursor()
+
+                my_cursor.execute("select student_name from student where student_id="+str(id))
+                n=my_cursor.fetchone()
+                n="+".join(n)
+
+                #selecting student id for attendance update
+                my_cursor.execute("select student_id from student where student_id="+str(id))
+                i=my_cursor.fetchone()
+                i="+".join(i)
+
+                my_cursor.execute("select roll_no from student where student_id="+str(id))
+                r=my_cursor.fetchone()
+                r=str(r[0])  # Convert roll number to string before joining
+                r="+".join(r)
+
+                my_cursor.execute("select Dep from student where student_id="+str(id))
+                d=my_cursor.fetchone()
+                d="+".join(d)
+
+                if confidence>75:
+                    cv2.putText(img, f"ID:{i}", (x,y-75), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255,255,255), 3)
+                    cv2.putText(img, f"Name:{n}", (x,y-55), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255,255,255), 3)
+                    self.mark_attendance(i,r,n,d)
+                else:
+                    cv2.rectangle(img,(x,y),(x+w,y+h), (0,0,255), 3)
+                    cv2.putText(img, "Unknown Face", (x,y-55), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255,255,255), 3)
+
+                coord=[x,y,w,h]
+
+            return coord
 
         def recognize(img,clf,faceCascade):
             coord=draw_boundary(img, faceCascade, 1.1, 10, (255,25,255), "Face", clf)

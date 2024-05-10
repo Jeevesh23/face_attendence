@@ -448,18 +448,6 @@ class Student:
                 messagebox.showerror("Error",f"Due to: {str(es)}",parent=self.root)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 if __name__ == "__main__":
     root=Tk()
     obj=Student(root)

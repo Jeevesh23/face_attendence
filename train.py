@@ -53,6 +53,8 @@ if __name__ == "__main__":
     root.mainloop()
 
 
+
+#<======== Different UI =========>#
 # import tkinter as tk
 # from tkinter import Button, Label, messagebox, ttk, filedialog
 # from PIL import Image, ImageTk
